@@ -1,16 +1,24 @@
+<!- Populated by ridgeChart js ->
+
+<div id="ridgeChart"></div>
+
+<script src="https://d3js.org/d3.v4.js"></script>
+
+
+<script>
 // set the dimensions and margins of the graph
-var margin = {top: 80, right: 0, bottom: 20, left:0},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+var marginRidge = {top: 80, right: 0, bottom: 20, left:0},
+    widthRidge = 400- marginRidge.left - marginRidge.right,
+    heightRidge = 400 - marginRidge.top - marginRidge.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#ridgeChart")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", widthRidge + marginRidge.left + marginRidge.right) //widthRidge + marginRidge.left + marginRidge.right
+    .attr("height", heightRidge + marginRidge.top + marginRidge.bottom) //heightRidge + marginRidge.top + marginRidge.bottom
   .append("g")
     .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+          "translate(" + marginRidge.left + "," + marginRidge.top + ")");
 
 //read data
 d3.csv("https://raw.githubusercontent.com/zonination/perceptions/master/probly.csv", function(data) {
@@ -36,11 +44,11 @@ d3.csv("https://raw.githubusercontent.com/zonination/perceptions/master/probly.c
   // Add X axis
   var x = d3.scaleLinear()
     .domain([-10, 120])
-    .range([ 0, width ]);
+    .range([ 0, widthRidge ]);
   svg.append("g")
     .attr("class", "xAxis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x).tickValues([0,25, 50, 75, 100]).tickSize(-height) )
+    .attr("transform", "translate(0," + heightRidge + ")")
+    .call(d3.axisBottom(x).tickValues([0,25, 50, 75, 100]).tickSize(-heightRidge) )
     .select(".domain").remove()
 
   // Add X axis label:
@@ -53,12 +61,12 @@ d3.csv("https://raw.githubusercontent.com/zonination/perceptions/master/probly.c
   // Create a Y scale for densities
   var y = d3.scaleLinear()
     .domain([0, 0.25])
-    .range([ height, 0]);
+    .range([ heightRidge, 0]);
 
   // Create the Y axis for names
   var yName = d3.scaleBand()
     .domain(categories)
-    .range([0, height])
+    .range([0, heightRidge])
     .paddingInner(1)
   /*svg.append("g")
     .call(d3.axisLeft(yName).tickSize(0))
@@ -78,7 +86,7 @@ d3.csv("https://raw.githubusercontent.com/zonination/perceptions/master/probly.c
     .data(allDensity)
     .enter()
     .append("path")
-      .attr("transform", function(d){return("translate(0," + (yName(d.key)-height) +")" )})
+      .attr("transform", function(d){return("translate(0," + (yName(d.key)-heightRidge) +")" )})
       .attr("fill", function(d){
         grp = d.key ;
         index = categories.indexOf(grp)
@@ -110,3 +118,8 @@ function kernelEpanechnikov(k) {
     return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
   };
 }
+
+
+
+
+</script>
